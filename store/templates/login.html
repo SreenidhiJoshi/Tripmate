@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<header style="margin-bottom: 20px;">
+    <div class="container px-2 px-lg-1 my-1">
+        <div class="text-center text-black">
+            <h1 class="display-4 fw-bolder" style="margin-top: 50px; margin-bottom: 10px;">Login</h1>
+        </div>
+    </div>
+</header>
+
+<style>
+    /*style.css*/
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensures full height */
+        margin: 0;
+        font-family: sans-serif;
+        background: #f3f3f3;
+        margin-left: 0px;
+    }
+
+    .main {
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        width: 400px;
+        text-align: center;
+        flex-grow: 1; /* Pushes the footer down */
+        margin: auto; /* Centers the form */
+    }
+
+    .container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    }
+
+    h1 {
+        color: #000000;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        text-align: left;
+        color: #000000;
+        font-weight: bold;
+    }
+
+    input {
+        display: block;
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 20px;
+        border: none;
+        color: white;
+        cursor: pointer;
+        background-color: #000000;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    footer {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: #000;
+        padding: 15px 0;
+        text-align: center;
+        color: white;
+    }
+</style>
+
+<div class="container-wrapper">
+    <div class="main">
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your Username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+
+            <div class="wrap">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+
+        <p>Not registered? <span style="text-decoration: none; color: gray;">Create an account</span></p>
+    </div>
+</div>
+
+<footer class="py-4 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Ecom Website 2025</p>
+    </div>
+</footer>
+
+{% endblock %}

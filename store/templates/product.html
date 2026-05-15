@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <br/>
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">{{ product.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <br/><br/>
+
+    <!-- Button to Get Directions -->
+    <div class="card p-3">
+        <button onclick="openGoogleMaps()" class="btn btn-primary">Get Directions to {{ product.name }}</button>
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+<script>
+    function openGoogleMaps() {
+        // Check if Geolocation is available
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                let userLat = position.coords.latitude;
+                let userLon = position.coords.longitude;
+
+                // Ensure destination coordinates are properly formatted as numbers
+                let destLat = parseFloat("{{ product.latitude }}");
+                let destLon = parseFloat("{{ product.longitude }}");
+
+                // Generate Google Maps URL
+                let mapsUrl = `https://www.google.com/maps/dir/${userLat},${userLon}/${destLat},${destLon}/`;
+
+                // Open Google Maps in a new tab
+                window.open(mapsUrl, "_blank");
+
+            }, function(error) {
+                alert("Error getting location: " + error.message);
+            });
+
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+</script>
+
+{% endblock %}

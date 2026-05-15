@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Plan Your Route</h2>
+
+<!-- Step 1: Ask for Number of Stops -->
+<form method="post" id="stopsForm">
+    {% csrf_token %}
+    <label for="num_stops" class="form-label">Enter Number of Stops:</label>
+    <input type="number" id="num_stops" name="num_stops" min="1" max="10" class="form-control" required>
+    <button type="button" id="generateFields" class="btn btn-secondary mt-2">Next</button>
+</form>
+
+<!-- Step 2: Input Places Dynamically -->
+<form method="post" id="placesForm" style="display: none;">
+    {% csrf_token %}
+    <div id="placesContainer"></div> <!-- Dynamic text boxes will appear here -->
+    <button type="submit" class="btn btn-primary mt-3">Generate Route</button>
+</form>
+
+<h2>Route Map</h2>
+{% if map_path %}
+    <iframe src="/mapapp/static/maps/travel_route.html" width="100%" height="500px" style="border:none;"></iframe>
+{% else %}
+    <p>Enter locations to generate a route map.</p>
+{% endif %}
+
+<script>
+document.getElementById('generateFields').addEventListener('click', function() {
+    var numStops = document.getElementById('num_stops').value;
+    var container = document.getElementById('placesContainer');
+    container.innerHTML = ""; // Clear previous inputs
+
+    if (numStops > 0) {
+        for (var i = 1; i <= numStops; i++) {
+            var inputField = document.createElement('input');
+            inputField.type = 'text';
+            inputField.name = 'places';
+            inputField.placeholder = 'Enter Place ' + i;
+            inputField.className = 'form-control mt-2';
+            container.appendChild(inputField);
+        }
+        document.getElementById('placesForm').style.display = 'block';
+    }
+});
+</script>
+
+{% endblock %}
